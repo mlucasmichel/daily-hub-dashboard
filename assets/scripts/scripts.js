@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   loadNotes();
 
+  /** Adds a new note */
   notesForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const text = noteInput.value.trim();
@@ -33,4 +34,15 @@ document.addEventListener("DOMContentLoaded", function () {
     loadNotes();
     noteInput.value = "";
   });
+
+    /** Deletes a note */
+    notesList.addEventListener("click", (event) => {
+        if (event.target.tagName === "BUTTON") {
+            const id = Number(event.target.dataset.id);
+            let notes = JSON.parse(localStorage.getItem("notes")) || [];
+            notes = notes.filter((note) => note.id !== id);
+            localStorage.setItem("notes", JSON.stringify(notes));
+            loadNotes();
+        }
+    });
 });
