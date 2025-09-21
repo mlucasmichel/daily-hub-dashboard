@@ -43,14 +43,16 @@ document.addEventListener("DOMContentLoaded", function () {
     noteInput.value = "";
   });
 
-    /** Deletes a note */
-    notesList.addEventListener("click", (event) => {
-        if (event.target.tagName === "BUTTON") {
-            const id = Number(event.target.dataset.id);
-            let notes = JSON.parse(localStorage.getItem("notes")) || [];
-            notes = notes.filter((note) => note.id !== id);
-            localStorage.setItem("notes", JSON.stringify(notes));
-            loadNotes();
-        }
-    });
+  /** Deletes a note */
+  notesList.addEventListener("click", (event) => {
+    if (event.target.tagName === "BUTTON") {
+      const id = Number(event.target.dataset.id);
+      let notes = JSON.parse(localStorage.getItem("notes")) || [];
+      notes = notes.filter((note) => note.id !== id);
+      localStorage.setItem("notes", JSON.stringify(notes));
+      loadNotes();
+    }
+  });
+
+  
 });
