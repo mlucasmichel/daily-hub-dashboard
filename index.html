@@ -14,46 +14,50 @@
 </head>
 
 <body>
-    <header>
-        <h1>Daily Hub</h1>
-        <nav>
-            <ul>
-                <li><a href="#notes">Notes</a></li>
-                <li><a href="#weather">Weather</a></li>
-                <li><a href="#news">News</a></li>
-            </ul>
-        </nav>
+    <header class="p-3 bg-light border-bottom">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <h1 class="h3 mb-0">Daily Hub</h1>
+            <nav>
+                <ul>
+                    <li><a href="#notes">Notes</a></li>
+                    <li><a href="#weather">Weather</a></li>
+                    <li><a href="#news">News</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main>
-        <!-- Weather Section -->
-        <section id="weather">
-            <h2>Weather</h2>
-            <form id="weather-form">
-                <input type="text" id="city-input" name="city-input" placeholder="Enter city" required>
-                <button type="submit">Get Weather</button>
-            </form>
-            <div id="weather-result"></div>
-        </section>
+    <main class="container-fluid my-3">
+        <div class="row g-3">
+            <!-- Weather Section -->
+            <section id="weather" class="col-12 col-lg-3">
+                <h2 class="h4">Weather</h2>
+                <form id="weather-form" class="mb-3">
+                    <input type="text" id="city-input" name="city-input" placeholder="Enter city" class="form-control mb-2" required>
+                    <button type="submit" class="btn btn-primary w-100">Get Weather</button>
+                </form>
+                <div id="weather-result"></div>
+            </section>
 
-        <!-- Notes Section -->
-        <section id="notes">
-            <h2>Notes</h2>
-            <form id="notes-form">
-                <textarea id="note-input" name="note-input" placeholder="Write your note here..."></textarea>
-                <button type="submit">Add Note</button>
-            </form>
-            <ul id="notes-list"></ul>
-        </section>
+            <!-- Notes Section -->
+            <section id="notes" class="col-12 col-lg-6">
+                <h2 class="h4">Notes</h2>
+                <form id="notes-form" class="mb-3">
+                    <textarea id="note-input" name="note-input" placeholder="Write your note here..." class="form-control mb-2"></textarea>
+                    <button type="submit" class="btn btn-primary w-100">Add Note</button>
+                </form>
+                <ul id="notes-list"></ul>
+            </section>
 
-        <!-- News Section -->
-        <section id="news">
-            <h2>News</h2>
-            <div id="news-list"></div>
-        </section>
+            <!-- News Section -->
+            <section id="news" class="col-12 col-lg-6">
+                <h2 class="h4">News</h2>
+                <div id="news-list" class="list-unstyled"></div>
+            </section>
+        </div>
     </main>
 
-    <footer>
+    <footer class="text-center py-3 border-top">
         <p>Daily Hub</p>
     </footer>
 
