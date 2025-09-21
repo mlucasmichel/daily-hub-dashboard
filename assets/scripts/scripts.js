@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // set default active section
+  let activeSection = "notes";
+
   // Notes Elements
   const notesForm = document.getElementById("notes-form");
   const noteInput = document.getElementById("note-input");
@@ -243,27 +246,26 @@ document.addEventListener("DOMContentLoaded", function () {
   /** Displays the selected section and hides others on small screens */
   function showSection(sectionId) {
     const sections = ["weather", "notes", "news"];
+    activeSection = sectionId;
 
     sections.forEach((id) => {
       const el = document.getElementById(id);
-      if (el) {
-        // display the selected section and hide others on small screens
-        if (sectionId === "all") {
-          el.classList.remove("hidden");
-        } else if (window.innerWidth < 992) {
-          if (id === sectionId) {
-            el.classList.remove("hidden");
-          } else {
-            el.classList.add("hidden");
-          }
+      if (!el) return;
+
+      if (window.innerWidth < 992) {
+        // Mobile view - only show the selected section
+        if (id === sectionId) {
+          el.classList.remove("d-none");
         } else {
-          // always show all sections on large screens
-          el.style.display = "block";
+          el.classList.add("d-none");
         }
+      } else {
+        // Desktop view - always show all sections
+        el.classList.remove("d-none");
       }
     });
 
-    // close the offcanvas menu after selecting a section
+    // Close the offcanvas menu after selecting a section
     const offcanvasEl = document.getElementById("mobileMenu");
     const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
     if (bsOffcanvas) {
@@ -272,18 +274,24 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   window.showSection = showSection;
 
+  // Keep layout correct on resize
   window.addEventListener("resize", () => {
     if (window.innerWidth < 992) {
-      showSection("notes");
+      showSection(activeSection);
     } else {
-      showSection("all");
+      // On desktop show all sections
+      ["weather", "notes", "news"].forEach((id) => {
+        document.getElementById(id)?.classList.remove("d-none");
+      });
     }
   });
 
-  // show default section on load
+  // Initial display
   if (window.innerWidth < 992) {
-    showSection("notes");
+    showSection(activeSection);
   } else {
-    showSection("all");
+    ["weather", "notes", "news"].forEach((id) => {
+      document.getElementById(id)?.classList.remove("d-none");
+    });
   }
 });
