@@ -7,9 +7,16 @@ body {
     color: #333;
 }
 
+header {
+    background-color: #000;
+    border-bottom: 1px solid #ddd;
+    padding: 1rem;
+}
+
 section {
     opacity: 1;
     transition: opacity 0.3s ease-in-out;
+    box-sizing: border-box;
 }
 
 section.hidden {
@@ -21,4 +28,5 @@ section.hidden {
 
 #weather, #notes, #news {
     display: block;
+    height: 100%;
 }

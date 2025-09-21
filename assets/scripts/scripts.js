@@ -122,12 +122,16 @@ document.addEventListener("DOMContentLoaded", function () {
       const card = document.createElement("div");
       card.classList.add("news-card");
       card.innerHTML = `
-                <img src="${article.image}" alt="${article.title}" />
-                <h3><a href="${article.url}" target="_blank">${
-        article.title
-      }</a></h3>
-                <p>${article.description || "No description available."}</p>
-                <a href="${article.url}" target="_blank">Read more</a>
+                <div class="card mt-3 shadow-sm">
+                    <img src="${article.image}" alt="${article.title}" class="card-img-top" />
+                    <div class="card-body">
+                        <h3 class="card-title"><a href="${article.url}" target="_blank">${
+                                article.title
+                              }</a></h3>
+                        <p class="card-text">${article.description || "No description available."}</p>
+                        <a href="${article.url}" target="_blank" class="btn btn-primary">Read more</a>
+                    </div>
+                </div>
                 `;
       newsList.appendChild(card);
     });
@@ -178,9 +182,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (window.innerWidth < 992) {
     showSection("notes");
   } else {
-    ['weather', 'notes', 'news'].forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = "block";
-    });
+    showSection("all");
   }
 });
