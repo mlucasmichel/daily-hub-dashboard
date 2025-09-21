@@ -176,6 +176,39 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     </div>
   `;
+
+    // Change background based on weather condition
+    const weatherCondition = data.weather[0].main.toLowerCase();
+    switch (weatherCondition) {
+      case "clear":
+        bgClass = "weather-clear";
+        break;
+      case "clouds":
+        bgClass = "weather-clouds";
+        break;
+      case "rain":
+        bgClass = "weather-rain";
+        break;
+      case "snow":
+        bgClass = "weather-snow";
+        break;
+      case "thunderstorm":
+        bgClass = "weather-thunderstorm";
+        break;
+      case "mist":
+        bgClass = "weather-mist";
+        break;
+      case "fog":
+        bgClass = "weather-fog";
+        break;
+      default:
+        bgClass = "weather-clear";
+        break;
+    }
+
+    weatherResult.querySelectorAll(".weather-card").forEach((card) => {
+      card.classList.add(bgClass);
+    });
   }
 
   /** Formats UNIX timestamp to HH:MM AM/PM */

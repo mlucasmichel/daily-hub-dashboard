@@ -1,32 +1,49 @@
 /* Base styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
 }
 
 header {
-    background-color: #000;
-    border-bottom: 1px solid #ddd;
-    padding: 1rem;
+  background-color: #000;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem;
 }
 
 section {
-    opacity: 1;
-    transition: opacity 0.3s ease-in-out;
-    box-sizing: border-box;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  box-sizing: border-box;
 }
 
 section.hidden {
-    opacity: 0;
-    pointer-events: none;
-    height: 0;
-    overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  overflow: hidden;
 }
 
-#weather, #notes, #news {
-    display: block;
-    height: 100%;
+#weather,
+#notes,
+#news {
+  display: block;
+  height: 100%;
+}
+
+/* Weather Section */
+ /* Weather backgrounds */
+.weather-clear { background: linear-gradient(to bottom, #ffe57f, #ffb74d); }
+.weather-clouds { background: linear-gradient(to bottom, #b0bec5, #90a4ae); }
+.weather-rain { background: linear-gradient(to bottom, #4fc3f7, #0288d1); }
+.weather-snow { background: linear-gradient(to bottom, #e0f7fa, #81d4fa); }
+.weather-thunderstorm { background: linear-gradient(to bottom, #757575, #212121); }
+.weather-mist { background: linear-gradient(to bottom, #cfd8dc, #b0bec5); }
+
+.weather-card {
+  transition: background 0.5s ease;
+  padding: 1rem;
+  border-radius: 0.5rem;
 }
