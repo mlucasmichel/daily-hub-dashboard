@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // News Elements
   const newsList = document.getElementById("news-list");
-//   const NEWS_API_KEY = "d967cc5f1ec58d7ec8107a22e7811a0c"; // old key, replaced below
+  //   const NEWS_API_KEY = "d967cc5f1ec58d7ec8107a22e7811a0c"; // old key, replaced below
   const NEWS_API_KEY = "e51638367d6d16dcc0a18d3464b5a27b";
   console.log("News DOM elements loaded:", { newsList });
 
@@ -278,52 +278,69 @@ document.addEventListener("DOMContentLoaded", function () {
     const now = Date.now();
 
     // Use cached news if less than 2 hours old
-    if (cached && cachedTime && now - cachedTime < 2000 * 60 * 60) {
-        displayNews(JSON.parse(cached));
-        return;
+    if (cached && cachedTime && now - cachedTime < 2 * 60 * 60 * 1000) {
+      displayNews(JSON.parse(cached));
+      return;
     }
 
     const url = `https://gnews.io/api/v4/top-headlines?country=ie&lang=en&max=5&apikey=${NEWS_API_KEY}`;
 
     try {
       const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error("Failed to fetch news");
-      }
+      if (!response.ok) throw new Error("Failed to fetch news");
+
       const data = await response.json();
+
+      // Cache the articles
+      localStorage.setItem("newsCache", JSON.stringify(data.articles));
+      localStorage.setItem("newsCacheTime", now);
+
       displayNews(data.articles);
     } catch (error) {
       newsList.innerHTML = `<p class="error">Error loading news: ${error.message}</p>`;
     }
   }
 
+  // Refresh news button
+  const refreshNewsBtn = document.getElementById("refresh-news");
+
+  refreshNewsBtn.addEventListener("click", () => {
+    // Clear cached news
+    localStorage.removeItem("newsCache");
+    localStorage.removeItem("newsCacheTime");
+
+    // Fetch fresh news
+    fetchNews();
+  });
+
   /** Displays news articles in the DOM */
   function displayNews(articles) {
-    newsList.innerHTML = "";
-    articles.forEach((article) => {
-      const card = document.createElement("div");
-      card.classList.add("news-card");
-      card.innerHTML = `
-                <div class="card mt-3 shadow-sm">
-                    <img src="${article.image}" alt="${
-        article.title
-      }" class="card-img-top" />
-                    <div class="card-body">
-                        <h3 class="card-title"><a href="${
-                          article.url
-                        }" target="_blank">${article.title}</a></h3>
-                        <p class="card-text">${
-                          article.description || "No description available."
-                        }</p>
-                        <a href="${
-                          article.url
-                        }" target="_blank" class="btn btn-primary">Read more</a>
-                    </div>
-                </div>
-                `;
-      newsList.appendChild(card);
+  newsList.innerHTML = ""; // Clear old articles
+
+  articles.forEach((article) => {
+    const card = document.createElement("div");
+    card.className = "news-card note-enter";
+    card.innerHTML = `
+      <div class="card mt-3 shadow-sm">
+        ${article.image ? `<img src="${article.image}" alt="${article.title}" class="card-img-top"/>` : ""}
+        <div class="card-body">
+          <h3 class="card-title">
+            <a href="${article.url}" target="_blank">${article.title}</a>
+          </h3>
+          <p class="card-text">${article.description || "No description available."}</p>
+          <a href="${article.url}" target="_blank" class="btn btn-primary">Read more</a>
+        </div>
+      </div>
+    `;
+    newsList.appendChild(card);
+
+    // Animation
+    requestAnimationFrame(() => {
+      card.classList.add("note-enter-active");
+      card.classList.remove("note-enter");
     });
-  }
+  });
+}
   fetchNews();
 
   /** Displays the selected section and hides others on small screens */
