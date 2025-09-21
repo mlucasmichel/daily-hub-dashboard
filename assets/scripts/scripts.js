@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
       li.className = "col-12 col-md-6"; // no animation on load
       li.innerHTML = `
       <div>
-        <p>${note.text}</p>
+        <p><pre>${note.text}</pre></p>
       </div>
     `;
 
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
     li.className = "col-12 col-md-6 note-enter";
     li.innerHTML = `
     <div>
-      <p>${note.text}</p>
+      <p><pre>${note.text}</pre></p>
     </div>
   `;
 
