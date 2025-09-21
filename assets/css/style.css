@@ -7,6 +7,18 @@ body {
     color: #333;
 }
 
+section {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+section.hidden {
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+}
+
 #weather, #notes, #news {
     display: block;
 }

@@ -163,10 +163,10 @@ document.addEventListener("DOMContentLoaded", function () {
   window.showSection = showSection;
 
   window.addEventListener("resize", () => {
-    if (window.innerWidth >= 992) {
-      showSection("all");
-    } else {
+    if (window.innerWidth < 992) {
       showSection("notes");
+    } else {
+      showSection("all");
     }
   });
 
