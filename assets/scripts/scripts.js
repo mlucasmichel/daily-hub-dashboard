@@ -79,4 +79,14 @@ document.addEventListener("DOMContentLoaded", function () {
       weatherResult.innerHTML = `<p class="error">${error.message}</p>`;
     }
   }
+
+    /** Displays weather data in the DOM */
+    function displayWeather(data) {
+      weatherResult.innerHTML = `
+        <h3>${data.name}, ${data.sys.country}</h3>
+        <p>${data.main.temp} °C</p>
+        <p>${data.weather[0].description}</p>
+      `;
+    }
+
 });
