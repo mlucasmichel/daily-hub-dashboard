@@ -21,7 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // News Elements
   const newsList = document.getElementById("news-list");
-  const NEWS_API_KEY = "d967cc5f1ec58d7ec8107a22e7811a0c";
+//   const NEWS_API_KEY = "d967cc5f1ec58d7ec8107a22e7811a0c"; // old key, replaced below
+  const NEWS_API_KEY = "e51638367d6d16dcc0a18d3464b5a27b";
   console.log("News DOM elements loaded:", { newsList });
 
   /** Loads notes from localStorage and displays them */
@@ -272,6 +273,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /** Fetches news articles from the News API */
   async function fetchNews() {
+    const cached = localStorage.getItem("newsCache");
+    const cachedTime = localStorage.getItem("newsCacheTime");
+    const now = Date.now();
+
+    // Use cached news if less than 2 hours old
+    if (cached && cachedTime && now - cachedTime < 2000 * 60 * 60) {
+        displayNews(JSON.parse(cached));
+        return;
+    }
+
     const url = `https://gnews.io/api/v4/top-headlines?country=ie&lang=en&max=5&apikey=${NEWS_API_KEY}`;
 
     try {
