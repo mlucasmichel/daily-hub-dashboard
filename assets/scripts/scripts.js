@@ -89,4 +89,13 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
     }
 
+    /** Handles weather form submission */
+    weatherForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const city = cityInput.value.trim();
+      if (city) {
+        fetchWeather(city);
+        cityInput.value = "";
+      }
+    });
 });
