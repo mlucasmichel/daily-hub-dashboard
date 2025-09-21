@@ -31,12 +31,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     notes.forEach((note) => {
       const li = document.createElement("li");
-      li.className = "col12 col-md-6 note-enter";
+      li.className = "col-12 col-md-6"; // no animation on load
       li.innerHTML = `
-        <div>
-            <p>${note.text}</p>
-        </div>
-      `;
+      <div>
+        <p>${note.text}</p>
+      </div>
+    `;
 
       const deleteBtn = document.createElement("button");
       deleteBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
@@ -44,50 +44,65 @@ document.addEventListener("DOMContentLoaded", function () {
       li.querySelector("div").appendChild(deleteBtn);
 
       notesList.appendChild(li);
-
-      // Animation
-      li.offsetHeight;
-      li.classList.add("note-enter-active");
     });
   }
   loadNotes();
 
-  /** Adds a new note */
+  /** Adds a single note element to the DOM with animation */
+  function addNoteToDOM(note) {
+    const li = document.createElement("li");
+    li.className = "col-12 col-md-6 note-enter";
+    li.innerHTML = `
+    <div>
+      <p>${note.text}</p>
+    </div>
+  `;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
+    deleteBtn.dataset.id = note.id;
+    li.querySelector("div").appendChild(deleteBtn);
+
+    notesList.appendChild(li);
+
+    li.offsetHeight;
+    // Animation
+    li.classList.add("note-enter-active");
+    li.classList.remove("note-enter");
+  }
+
+  /** Handles note form submission */
   notesForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const text = noteInput.value.trim();
     if (!text) return;
 
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
-    notes.push({ id: Date.now(), text });
+    const newNote = { id: Date.now(), text };
+    notes.push(newNote);
     localStorage.setItem("notes", JSON.stringify(notes));
-    loadNotes();
+
+    // Add this note with animation
+    addNoteToDOM(newNote);
+
     noteInput.value = "";
   });
 
-  /** Deletes a note */
+  /** Deletes a note with exit animation */
   notesList.addEventListener("click", (event) => {
-    if (event.target.tagName === "BUTTON") {
-      const li = event.target.parentElement; // the <li> to remove
+    const btn = event.target.closest("button");
+    if (!btn) return;
 
-      // Animation
-      li.classList.add("note-leave");
-      requestAnimationFrame(() => {
-        li.classList.add("note-leave-active");
-      });
+    const id = Number(btn.dataset.id);
+    let notes = JSON.parse(localStorage.getItem("notes")) || [];
+    notes = notes.filter((note) => note.id !== id);
+    localStorage.setItem("notes", JSON.stringify(notes));
 
-      li.addEventListener(
-        "transitionend",
-        () => {
-          const id = Number(event.target.dataset.id);
-          let notes = JSON.parse(localStorage.getItem("notes")) || [];
-          notes = notes.filter((note) => note.id !== id);
-          localStorage.setItem("notes", JSON.stringify(notes));
-
-          li.remove();
-        },
-        { once: true }
-      );
+    // Animation
+    const li = btn.closest("li");
+    if (li) {
+      li.classList.add("note-exit");
+      li.addEventListener("transitionend", () => li.remove());
     }
   });
 

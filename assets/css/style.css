@@ -94,20 +94,18 @@ section.hidden {
 
 /* note animations */
 .note-enter {
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(-20px);
 }
+
 .note-enter-active {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease;
 }
-.note-leave {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.note-leave-active {
-    opacity: 0;
-    transform: translateY(-10px);
+
+.note-exit {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
 }
