@@ -21,20 +21,27 @@
     </header>
 
     <main>
+        <!-- Weather Section -->
         <section id="weather">
             <h2>Weather</h2>
-            <p>Weather feature coming soon...</p>
+            <form id="weather-form">
+                <input type="text" id="city-input" name="city-input" placeholder="Enter city" required>
+                <button type="submit">Get Weather</button>
+            </form>
+            <div id="weather-result"></div>
         </section>
 
+        <!-- Notes Section -->
         <section id="notes">
             <h2>Notes</h2>
             <form id="notes-form">
-                <textarea id="note-input" name="note-input" placeholder="Wire your note here..."></textarea>
+                <textarea id="note-input" name="note-input" placeholder="Write your note here..."></textarea>
                 <button type="submit">Add Note</button>
             </form>
             <ul id="notes-list"></ul>
         </section>
 
+        <!-- News Section -->
         <section id="news">
             <h2>News</h2>
             <p>News feature coming soon...</p>
