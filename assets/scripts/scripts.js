@@ -1,7 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Notes Elements
   const notesForm = document.getElementById("notes-form");
   const noteInput = document.getElementById("note-input");
   const notesList = document.getElementById("notes-list");
+
+  // weather Elements
+  const weatherForm = document.getElementById("weather-form");
+  const cityInput = document.getElementById("city-input");
+  const weatherResult = document.getElementById("weather-result");
+
+  console.log("Weather DOM elements loaded:", { weatherForm, cityInput, weatherResult });
 
   /** Loads notes from localStorage and displays them */
   function loadNotes() {
