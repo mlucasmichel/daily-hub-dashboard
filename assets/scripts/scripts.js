@@ -31,14 +31,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     notes.forEach((note) => {
       const li = document.createElement("li");
-      li.textContent = note.text;
+      li.className = "col12 col-md-6 note-enter";
+      li.innerHTML = `
+        <div>
+            <p>${note.text}</p>
+        </div>
+      `;
 
       const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "Delete";
+      deleteBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
       deleteBtn.dataset.id = note.id;
-      li.appendChild(deleteBtn);
+      li.querySelector("div").appendChild(deleteBtn);
 
       notesList.appendChild(li);
+
+      // Animation
+      li.offsetHeight;
+      li.classList.add("note-enter-active");
     });
   }
   loadNotes();
@@ -59,11 +68,26 @@ document.addEventListener("DOMContentLoaded", function () {
   /** Deletes a note */
   notesList.addEventListener("click", (event) => {
     if (event.target.tagName === "BUTTON") {
-      const id = Number(event.target.dataset.id);
-      let notes = JSON.parse(localStorage.getItem("notes")) || [];
-      notes = notes.filter((note) => note.id !== id);
-      localStorage.setItem("notes", JSON.stringify(notes));
-      loadNotes();
+      const li = event.target.parentElement; // the <li> to remove
+
+      // Animation
+      li.classList.add("note-leave");
+      requestAnimationFrame(() => {
+        li.classList.add("note-leave-active");
+      });
+
+      li.addEventListener(
+        "transitionend",
+        () => {
+          const id = Number(event.target.dataset.id);
+          let notes = JSON.parse(localStorage.getItem("notes")) || [];
+          notes = notes.filter((note) => note.id !== id);
+          localStorage.setItem("notes", JSON.stringify(notes));
+
+          li.remove();
+        },
+        { once: true }
+      );
     }
   });
 
