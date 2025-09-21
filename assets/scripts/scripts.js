@@ -132,5 +132,40 @@ document.addEventListener("DOMContentLoaded", function () {
       newsList.appendChild(card);
     });
   }
-    fetchNews();
+  fetchNews();
+
+  /** Displays the selected section and hides others on small screens */
+  function showSection(sectionId) {
+    const sections = ["weather", "notes", "news"];
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        // display the selected section and hide others on small screens
+        if (window.innerWidth < 992) {
+          el.style.display = id === sectionId ? "block" : "none";
+        } else {
+          // always show all sections on large screens
+          el.style.display = "block";
+        }
+      }
+    });
+
+    // close the offcanvas menu after selecting a section
+    const offcanvasEl = document.getElementById("mobileMenu");
+    const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
+    if (bsOffcanvas) {
+      bsOffcanvas.hide();
+    }
+  }
+  window.showSection = showSection;
+
+  // show default section on load
+  if (window.innerWidth < 992) {
+    showSection("notes");
+  } else {
+    ['weather', 'notes', 'news'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = "block";
+    });
+  }
 });
