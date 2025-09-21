@@ -9,7 +9,16 @@ document.addEventListener("DOMContentLoaded", function () {
   const cityInput = document.getElementById("city-input");
   const weatherResult = document.getElementById("weather-result");
 
-  console.log("Weather DOM elements loaded:", { weatherForm, cityInput, weatherResult });
+  console.log("Weather DOM elements loaded:", {
+    weatherForm,
+    cityInput,
+    weatherResult,
+  });
+
+  // News Elements
+  const newsContainer = document.getElementById("news-list");
+  
+  console.log("News DOM elements loaded:", { newsContainer });
 
   /** Loads notes from localStorage and displays them */
   function loadNotes() {
@@ -53,6 +62,4 @@ document.addEventListener("DOMContentLoaded", function () {
       loadNotes();
     }
   });
-
-  
 });
