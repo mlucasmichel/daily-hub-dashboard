@@ -82,11 +82,103 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /** Displays weather data in the DOM */
   function displayWeather(data) {
+    const iconUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    const sunrise = formatTime(data.sys.sunrise);
+    const sunset = formatTime(data.sys.sunset);
+
+    const utcTimestamp = Date.now() + new Date().getTimezoneOffset() * 60000;
+    const localTimestamp = utcTimestamp + data.timezone * 1000;
+    const localTime = new Date(localTimestamp).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
     weatherResult.innerHTML = `
+    <div class="weather-card p-3 border rounded text-center">
         <h3>${data.name}, ${data.sys.country}</h3>
-        <p>${data.main.temp} °C</p>
-        <p>${data.weather[0].description}</p>
-      `;
+        
+        <!-- Weather temperature -->
+        <div class="m-2 bg-body shadow-sm rounded d-flex flex-row align-items-center justify-content-between p-2">
+            <div class="weather-main d-flex align-items-center justify-content-center">
+                <img src="${iconUrl}" alt="${
+      data.weather[0].description
+    }" class="me-2" style="width:50px; height:50px;" />
+                <span class="temp fs-3 fw-bold">${Math.round(
+                  data.main.temp
+                )}°C</span>
+            </div>
+            <div class="text-start">
+                <p class="mb-1">Feels like: ${Math.round(
+                  data.main.feels_like
+                )}°C</p>
+                <span class="badge bg-info text-dark">Min: ${Math.round(
+                  data.main.temp_min
+                )}°C / Max: ${Math.round(data.main.temp_max)}°C</span>
+            </div>
+        </div>
+
+        <!-- Weather Details -->
+        <div class="m-2 bg-body shadow-sm rounded d-flex flex-row justify-content-between p-2">
+            <div class="d-flex flex-column align-items-start">
+                <p class="description text-capitalize fs-6 fst-italic mb-2">${
+                  data.weather[0].description
+                }</p>
+                <p class="mb-2"><i class="fa-solid fa-droplet"></i> Humidity: ${
+                  data.main.humidity
+                }%</p>
+                <p class="mb-0"><i class="fa-regular fa-sun"></i> Sunrise: ${sunrise}</p>
+            </div>
+            <div class="d-flex flex-column align-items-start">
+                <p class="mb-2"><i class="fa-solid fa-cloud"></i> Clouds: ${
+                  data.clouds.all
+                }%</p>
+                <p class="mb-2"><i class="fa-solid fa-wind"></i> Wind: ${
+                  data.wind.speed
+                } m/s</p>
+                <p class="mb-0"><i class="fa-regular fa-moon"></i> Sunset: ${sunset}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- More Weather Details -->
+    <div class="weather-card p-3 border rounded text-center mt-3">
+
+        <h4 class="mb-3">More Details</h4>
+
+        <div class="m-2 bg-body shadow-sm rounded d-flex flex-row justify-content-between p-2">
+            <div class="d-flex flex-column align-items-start">
+                <p><i class="fa-solid fa-gauge"></i> Pressure: ${
+                  data.main.pressure
+                } hPa</p>
+                <p><i class="fa-regular fa-eye"></i> Visibility: ${Math.round(
+                  data.visibility / 1000
+                )} km</p>
+            </div>
+            <div class="d-flex flex-column align-items-start">
+                <p><i class="fa-regular fa-clock"></i> Local Time: ${localTime}</p>
+                ${
+                  data.rain && data.rain["1h"]
+                    ? `<p><i class="fa-solid fa-cloud-rain"></i> Rain (1h): ${data.rain["1h"]} mm</p>`
+                    : ""
+                }
+                ${
+                  data.snow && data.snow["1h"]
+                    ? `<p><i class="fa-regular fa-snowflake"></i> Snow (1h): ${data.snow["1h"]} mm</p>`
+                    : ""
+                }
+                <p><i class="fa-solid fa-map-marker-alt"></i> Lat: ${
+                  data.coord.lat
+                }, Lon: ${data.coord.lon}</p>
+            </div>
+        </div>
+    </div>
+  `;
+  }
+
+  /** Formats UNIX timestamp to HH:MM AM/PM */
+  function formatTime(unixTime) {
+    const date = new Date(unixTime * 1000);
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   }
 
   /** Handles weather form submission */
