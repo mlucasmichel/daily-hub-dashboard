@@ -12,7 +12,7 @@ body {
   display: flex;
   flex-direction: column;
 }
-.bg-panel{
+.bg-panel {
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(5px);
 }
@@ -21,13 +21,17 @@ body {
   background-color: rgba(255, 255, 255, 0.5);
   color: #333;
   backdrop-filter: blur(5px);
-  box-shadow: none;
-  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 .btn-custom:hover {
   background-color: rgba(255, 255, 255, 0.8);
   color: #000;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+.btn-custom:active {
+    border: 1px solid transparent !important;
 }
 
 header {
@@ -94,6 +98,13 @@ section > .section-inner {
   flex: 1 1 auto;
   overflow-y: auto;
   min-height: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+#weather-result::-webkit-scrollbar,
+#notes-list::-webkit-scrollbar,
+#news-list::-webkit-scrollbar {
+  display: none;
 }
 
 footer {
@@ -197,4 +208,13 @@ pre {
   opacity: 0;
   transform: translateY(-20px);
   transition: all 0.3s ease;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.5);
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+.card:hover {
+    background: rgba(255, 255, 255, 0.7);
+    transform: translateY(-5px);
 }

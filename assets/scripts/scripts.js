@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }</p>
           <a href="${
             article.url
-          }" target="_blank" class="btn btn-primary">Read more</a>
+          }" target="_blank" class="btn btn-custom">Read more</a>
         </div>
       </div>
     `;

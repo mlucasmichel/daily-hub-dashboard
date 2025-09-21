@@ -17,20 +17,20 @@
     <header class="p-3 bg-panel border-bottom">
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <h1 class="h3 mb-0">Daily Hub</h1>
-            <button class="btn btn-outline-primary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu"><i class="fa-solid fa-bars"></i></button>
+            <button class="btn btn-custom d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu"><i class="fa-solid fa-bars"></i></button>
         </div>
     </header>
 
     <!-- Mobile Menu -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+    <div class="offcanvas  bg-panel offcanvas-end" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="mobileMenuLabel">Menu</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body d-flex flex-column">
-            <button class="btn btn-outline-secondary mb-2" onclick="showSection('weather')">Weather</button>
-            <button class="btn btn-outline-secondary mb-2" onclick="showSection('notes')">Notes</button>
-            <button class="btn btn-outline-secondary mb-2" onclick="showSection('news')">News</button>
+            <button class="btn btn-custom mb-2" onclick="showSection('weather')">Weather</button>
+            <button class="btn btn-custom mb-2" onclick="showSection('notes')">Notes</button>
+            <button class="btn btn-custom mb-2" onclick="showSection('news')">News</button>
         </div>
     </div>
 
@@ -56,7 +56,7 @@
                         <textarea id="note-input" name="note-input" placeholder="Write your note here..." class="form-control mb-2"></textarea>
                         <button type="submit" class="btn btn-custom w-40">Add note <i class="fa-solid fa-plus"></i></button>
                     </form>
-                    <ul id="notes-list" class="list-unstyled row g-3"></ul>
+                    <ul id="notes-list" class="list-unstyled my-2 row g-3"></ul>
                 </div>
             </section>
 
