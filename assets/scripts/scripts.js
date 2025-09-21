@@ -17,9 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // News Elements
-  const newsContainer = document.getElementById("news-list");
-
-  console.log("News DOM elements loaded:", { newsContainer });
+  const newsList = document.getElementById("news-list");
+  const NEWS_API_KEY = "d967cc5f1ec58d7ec8107a22e7811a0c";
+  console.log("News DOM elements loaded:", { newsList });
 
   /** Loads notes from localStorage and displays them */
   function loadNotes() {
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error("City not found");
+        throw new Error("City not found! Example: Dublin, IE");
       }
       const data = await response.json();
       displayWeather(data);
@@ -80,22 +80,57 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-    /** Displays weather data in the DOM */
-    function displayWeather(data) {
-      weatherResult.innerHTML = `
+  /** Displays weather data in the DOM */
+  function displayWeather(data) {
+    weatherResult.innerHTML = `
         <h3>${data.name}, ${data.sys.country}</h3>
         <p>${data.main.temp} °C</p>
         <p>${data.weather[0].description}</p>
       `;
-    }
+  }
 
-    /** Handles weather form submission */
-    weatherForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const city = cityInput.value.trim();
-      if (city) {
-        fetchWeather(city);
-        cityInput.value = "";
+  /** Handles weather form submission */
+  weatherForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const city = cityInput.value.trim();
+    if (city) {
+      fetchWeather(city);
+      cityInput.value = "";
+    }
+  });
+
+  /** Fetches news articles from the News API */
+  async function fetchNews() {
+    const url = `https://gnews.io/api/v4/top-headlines?country=ie&lang=en&max=5&apikey=${NEWS_API_KEY}`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Failed to fetch news");
       }
+      const data = await response.json();
+      displayNews(data.articles);
+    } catch (error) {
+      newsList.innerHTML = `<p class="error">Error loading news: ${error.message}</p>`;
+    }
+  }
+
+  /** Displays news articles in the DOM */
+  function displayNews(articles) {
+    newsList.innerHTML = "";
+    articles.forEach((article) => {
+      const card = document.createElement("div");
+      card.classList.add("news-card");
+      card.innerHTML = `
+                <img src="${article.image}" alt="${article.title}" />
+                <h3><a href="${article.url}" target="_blank">${
+        article.title
+      }</a></h3>
+                <p>${article.description || "No description available."}</p>
+                <a href="${article.url}" target="_blank">Read more</a>
+                `;
+      newsList.appendChild(card);
     });
+  }
+    fetchNews();
 });
