@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const weatherForm = document.getElementById("weather-form");
   const cityInput = document.getElementById("city-input");
   const weatherResult = document.getElementById("weather-result");
+  const WEATHER_API_KEY = "ce4c675fdf79035dc6c6caf5da9bc384";
 
   console.log("Weather DOM elements loaded:", {
     weatherForm,
@@ -17,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // News Elements
   const newsContainer = document.getElementById("news-list");
-  
+
   console.log("News DOM elements loaded:", { newsContainer });
 
   /** Loads notes from localStorage and displays them */
@@ -62,4 +63,20 @@ document.addEventListener("DOMContentLoaded", function () {
       loadNotes();
     }
   });
+
+  /** Fetches weather data from OpenWeather API */
+  async function fetchWeather(city) {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_API_KEY}&units=metric`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("City not found");
+      }
+      const data = await response.json();
+      displayWeather(data);
+    } catch (error) {
+      weatherResult.innerHTML = `<p class="error">${error.message}</p>`;
+    }
+  }
 });
