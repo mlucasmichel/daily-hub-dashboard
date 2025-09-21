@@ -3,6 +3,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-image: url("../images/main-bg.jpg");
   background-color: #f4f4f4;
   color: #333;
   height: 100vh;
@@ -10,6 +11,23 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+.bg-panel{
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(5px);
+}
+
+.btn-custom {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #333;
+  backdrop-filter: blur(5px);
+  box-shadow: none;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.btn-custom:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 header {

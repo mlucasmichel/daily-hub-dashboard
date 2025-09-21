@@ -305,7 +305,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         <div class="card-body">
           <h3 class="card-title">
-            <a href="${article.url}" target="_blank">${article.title}</a>
+            ${article.title}
           </h3>
           <p class="card-text">${
             article.description || "No description available."
