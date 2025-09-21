@@ -137,11 +137,14 @@ document.addEventListener("DOMContentLoaded", function () {
   /** Displays the selected section and hides others on small screens */
   function showSection(sectionId) {
     const sections = ["weather", "notes", "news"];
+
     sections.forEach((id) => {
       const el = document.getElementById(id);
       if (el) {
         // display the selected section and hide others on small screens
-        if (window.innerWidth < 992) {
+      if (sectionId === "all") {
+        el.style.display = "block";
+      } else if (window.innerWidth < 992) {
           el.style.display = id === sectionId ? "block" : "none";
         } else {
           // always show all sections on large screens
@@ -158,6 +161,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
   window.showSection = showSection;
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 992) {
+      showSection("all");
+    } else {
+      showSection("notes");
+    }
+  });
 
   // show default section on load
   if (window.innerWidth < 992) {
