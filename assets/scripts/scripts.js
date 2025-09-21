@@ -142,11 +142,15 @@ document.addEventListener("DOMContentLoaded", function () {
       const el = document.getElementById(id);
       if (el) {
         // display the selected section and hide others on small screens
-      if (sectionId === "all") {
-        el.style.display = "block";
+      if (sectionId === 'all') {
+        el.classList.remove('hidden');
       } else if (window.innerWidth < 992) {
-          el.style.display = id === sectionId ? "block" : "none";
+        if (id === sectionId) {
+          el.classList.remove('hidden');
         } else {
+          el.classList.add('hidden');
+        }
+      } else {
           // always show all sections on large screens
           el.style.display = "block";
         }
