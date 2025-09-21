@@ -97,7 +97,11 @@ document.addEventListener("DOMContentLoaded", function () {
       fetchWeather(city);
       cityInput.value = "";
     }
+    localStorage.setItem("city", city);
   });
+
+  const savedCity = localStorage.getItem("city") || "Dublin, IE";
+  fetchWeather(savedCity);
 
   /** Fetches news articles from the News API */
   async function fetchNews() {
@@ -123,13 +127,19 @@ document.addEventListener("DOMContentLoaded", function () {
       card.classList.add("news-card");
       card.innerHTML = `
                 <div class="card mt-3 shadow-sm">
-                    <img src="${article.image}" alt="${article.title}" class="card-img-top" />
+                    <img src="${article.image}" alt="${
+        article.title
+      }" class="card-img-top" />
                     <div class="card-body">
-                        <h3 class="card-title"><a href="${article.url}" target="_blank">${
-                                article.title
-                              }</a></h3>
-                        <p class="card-text">${article.description || "No description available."}</p>
-                        <a href="${article.url}" target="_blank" class="btn btn-primary">Read more</a>
+                        <h3 class="card-title"><a href="${
+                          article.url
+                        }" target="_blank">${article.title}</a></h3>
+                        <p class="card-text">${
+                          article.description || "No description available."
+                        }</p>
+                        <a href="${
+                          article.url
+                        }" target="_blank" class="btn btn-primary">Read more</a>
                     </div>
                 </div>
                 `;
@@ -146,15 +156,15 @@ document.addEventListener("DOMContentLoaded", function () {
       const el = document.getElementById(id);
       if (el) {
         // display the selected section and hide others on small screens
-      if (sectionId === 'all') {
-        el.classList.remove('hidden');
-      } else if (window.innerWidth < 992) {
-        if (id === sectionId) {
-          el.classList.remove('hidden');
+        if (sectionId === "all") {
+          el.classList.remove("hidden");
+        } else if (window.innerWidth < 992) {
+          if (id === sectionId) {
+            el.classList.remove("hidden");
+          } else {
+            el.classList.add("hidden");
+          }
         } else {
-          el.classList.add('hidden');
-        }
-      } else {
           // always show all sections on large screens
           el.style.display = "block";
         }
