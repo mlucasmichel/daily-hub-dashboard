@@ -117,6 +117,14 @@ footer {
   border-radius: 0.5rem;
 }
 
+.weather-inner {
+    background-color: rgb(255, 255, 255, 0.5);
+}
+.badge {
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
 /* Notes Section */
 pre {
     font-family: inherit;

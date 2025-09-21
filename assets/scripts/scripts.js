@@ -136,49 +136,38 @@ document.addEventListener("DOMContentLoaded", function () {
       minute: "2-digit",
     });
 
-    weatherResult.innerHTML = `
-    <div class="weather-card p-3 border rounded text-center">
-        <h3>${data.name}, ${data.sys.country}</h3>
-        
-        <!-- Weather temperature -->
-        <div class="m-2 bg-body shadow-sm rounded d-flex flex-row align-items-center justify-content-between p-2">
-            <div class="weather-main d-flex align-items-center justify-content-center">
-                <img src="${iconUrl}" alt="${
-      data.weather[0].description
-    }" class="me-2" style="width:50px; height:50px;" />
-                <span class="temp fs-3 fw-bold">${Math.round(
-                  data.main.temp
-                )}°C</span>
-            </div>
-            <div class="text-start">
-                <p class="mb-1">Feels like: ${Math.round(
-                  data.main.feels_like
-                )}°C</p>
-                <span class="badge bg-info text-dark">Min: ${Math.round(
-                  data.main.temp_min
-                )}°C / Max: ${Math.round(data.main.temp_max)}°C</span>
-            </div>
-        </div>
+  weatherResult.innerHTML = `
+  <div class="weather-card p-3 border rounded text-center">
+    <h3>${data.name}, ${data.sys.country}</h3>
+    <!-- Weather temperature -->
+    <div class="weather-inner m-2 shadow-sm rounded d-flex flex-wrap align-content-center justify-content-evenly p-2">
+      <div class="weather-main d-flex align-items-center justify-content-center mb-2 mb-md-0">
+        <img src="${iconUrl}" alt="${data.weather[0].description}" class="me-2" style="width:50px; height:50px;" />
+        <span class="temp fs-3 fw-bold">${Math.round(data.main.temp)}°C</span>
+      </div>
+      <div class="text-center">
+        <p class="mb-1">Feels like: ${Math.round(data.main.feels_like)}°C</p>
+        <span class="badge bg-info text-dark">Min: ${Math.round(data.main.temp_min)}°C / Max: ${Math.round(data.main.temp_max)}°C</span>
+      </div>
+    </div>
 
         <!-- Weather Details -->
-        <div class="m-2 bg-body shadow-sm rounded d-flex flex-row justify-content-between p-2">
-            <div class="d-flex flex-column align-items-start">
+        <div class="weather-inner m-2 shadow-sm rounded d-flex flex-row justify-content-evenly p-2">
+            <div class="d-flex flex-column align-items-center">
                 <p class="description text-capitalize fs-6 fst-italic mb-2">${
                   data.weather[0].description
                 }</p>
-                <p class="mb-2"><i class="fa-solid fa-droplet"></i> Humidity: ${
-                  data.main.humidity
-                }%</p>
-                <p class="mb-0"><i class="fa-regular fa-sun"></i> Sunrise: ${sunrise}</p>
-            </div>
-            <div class="d-flex flex-column align-items-start">
                 <p class="mb-2"><i class="fa-solid fa-cloud"></i> Clouds: ${
                   data.clouds.all
+                }%</p>
+                <p class="mb-2"><i class="fa-solid fa-droplet"></i> Humidity: ${
+                  data.main.humidity
                 }%</p>
                 <p class="mb-2"><i class="fa-solid fa-wind"></i> Wind: ${
                   data.wind.speed
                 } m/s</p>
-                <p class="mb-0"><i class="fa-regular fa-moon"></i> Sunset: ${sunset}</p>
+                <p class="mb-2"><i class="fa-regular fa-sun"></i> Sunrise: ${sunrise}</p>
+                <p class="mb-2"><i class="fa-regular fa-moon"></i> Sunset: ${sunset}</p>
             </div>
         </div>
     </div>
@@ -187,28 +176,15 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="weather-card p-3 border rounded text-center mt-3">
 
         <h4 class="mb-3">More Details</h4>
-
-        <div class="m-2 bg-body shadow-sm rounded d-flex flex-row justify-content-between p-2">
-            <div class="d-flex flex-column align-items-start">
+        <div class="weather-inner m-2 shadow-sm rounded d-flex flex-row justify-content-evenly p-2">
+            <div class="pt-2 d-flex flex-column align-items-center">
                 <p><i class="fa-solid fa-gauge"></i> Pressure: ${
                   data.main.pressure
                 } hPa</p>
                 <p><i class="fa-regular fa-eye"></i> Visibility: ${Math.round(
                   data.visibility / 1000
                 )} km</p>
-            </div>
-            <div class="d-flex flex-column align-items-start">
                 <p><i class="fa-regular fa-clock"></i> Local Time: ${localTime}</p>
-                ${
-                  data.rain && data.rain["1h"]
-                    ? `<p><i class="fa-solid fa-cloud-rain"></i> Rain (1h): ${data.rain["1h"]} mm</p>`
-                    : ""
-                }
-                ${
-                  data.snow && data.snow["1h"]
-                    ? `<p><i class="fa-regular fa-snowflake"></i> Snow (1h): ${data.snow["1h"]} mm</p>`
-                    : ""
-                }
                 <p><i class="fa-solid fa-map-marker-alt"></i> Lat: ${
                   data.coord.lat
                 }, Lon: ${data.coord.lon}</p>
@@ -315,32 +291,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /** Displays news articles in the DOM */
   function displayNews(articles) {
-  newsList.innerHTML = ""; // Clear old articles
+    newsList.innerHTML = ""; // Clear old articles
 
-  articles.forEach((article) => {
-    const card = document.createElement("div");
-    card.className = "news-card note-enter";
-    card.innerHTML = `
+    articles.forEach((article) => {
+      const card = document.createElement("div");
+      card.className = "news-card note-enter";
+      card.innerHTML = `
       <div class="card mt-3 shadow-sm">
-        ${article.image ? `<img src="${article.image}" alt="${article.title}" class="card-img-top"/>` : ""}
+        ${
+          article.image
+            ? `<img src="${article.image}" alt="${article.title}" class="card-img-top"/>`
+            : ""
+        }
         <div class="card-body">
           <h3 class="card-title">
             <a href="${article.url}" target="_blank">${article.title}</a>
           </h3>
-          <p class="card-text">${article.description || "No description available."}</p>
-          <a href="${article.url}" target="_blank" class="btn btn-primary">Read more</a>
+          <p class="card-text">${
+            article.description || "No description available."
+          }</p>
+          <a href="${
+            article.url
+          }" target="_blank" class="btn btn-primary">Read more</a>
         </div>
       </div>
     `;
-    newsList.appendChild(card);
+      newsList.appendChild(card);
 
-    // Animation
-    requestAnimationFrame(() => {
-      card.classList.add("note-enter-active");
-      card.classList.remove("note-enter");
+      // Animation
+      requestAnimationFrame(() => {
+        card.classList.add("note-enter-active");
+        card.classList.remove("note-enter");
+      });
     });
-  });
-}
+  }
   fetchNews();
 
   /** Displays the selected section and hides others on small screens */
